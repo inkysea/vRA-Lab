@@ -1,5 +1,5 @@
 
-Get-WindowsFeature AD-Domain-Services | Install-WindowsFeature  –IncludeManagementTools
+Get-WindowsFeature AD-Domain-Services | Install-WindowsFeature -IncludeManagementTools
 
 Import-Module ADDSDeployment
 

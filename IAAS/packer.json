@@ -1,0 +1,290 @@
+{
+"variables": {
+"iso_file": "",
+"iso_sha1sum": "",
+"vmware_tools_download": "http://packages.vmware.com/tools/esx/latest/windows/x64/VMware-tools-8.6.16-3054402-x86_64.exe",
+"sql_download": "https://download.microsoft.com/download/0/1/E/01E0D693-2B4F-4442-9713-27A796B327BD/SQLEXPRWT_x64_ENU.exe",
+"vra_iaas_agent_download" : ""
+
+},
+  "builders": [
+    {
+      "type": "vmware-vmx",
+      "source_path": "output-server2012r2_tools/server2012r2_tools.vmx",
+      "name": "vra-iaas",
+      "vm_name": "vra-iaas",
+      "boot_wait": "5s",
+      "communicator": "winrm",
+      "floppy_files": [
+        "scripts/autounattend.xml",
+        "scripts/configure-winrm.ps1"
+      ],
+      "headless": false,
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10m",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "skip_compaction": false
+
+    },
+    {
+      "type": "vmware-vmx",
+      "source_path": "output-server2012/server2012r2.vmx",
+      "name": "server2012r2-base",
+      "vm_name": "server2012r2_tools",
+      "boot_wait": "5s",
+      "communicator": "winrm",
+      "floppy_files": [
+        "scripts/autounattend.xml",
+        "scripts/configure-winrm.ps1"
+      ],
+      "headless": false,
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10m",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "skip_compaction": false
+
+    },
+    {
+      "name": "Server2012R2",
+      "type": "vmware-iso",
+      "vm_name": "server2012r2",
+      "boot_wait": "5s",
+      "communicator": "winrm",
+      "disk_size": 61440,
+      "guest_os_type": "windows",
+      "floppy_files": [
+        "scripts/autounattend.xml",
+        "scripts/configure-winrm.ps1",
+        "scripts/install-vmware-tools.ps1"
+      ],
+      "guest_os_type": "windows8srv-64",
+      "headless": false,
+      "iso_url": "{{user `iso_file`}}",
+      "iso_checksum_type": "sha1",
+      "iso_checksum": "{{user `iso_sha1sum`}}",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10m",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "skip_compaction": false,
+      "vmx_data": {
+        "gui.fitguestusingnativedisplayresolution": "FALSE",
+        "memsize": "2048",
+        "numvcpus": "2",
+        "virtualHW.version": "10",
+        "scsi0.virtualDev": "lsisas1068"
+      }
+    },
+    {
+      "name": "Server2012R2_gugent",
+      "type": "vmware-iso",
+      "vm_name": "server2012r2",
+      "boot_wait": "5s",
+      "communicator": "winrm",
+      "disk_size": 61440,
+      "guest_os_type": "windows",
+      "floppy_files": [
+        "scripts/autounattend.xml",
+        "scripts/configure-winrm.ps1",
+        "scripts/install-vmware-tools.ps1"
+      ],
+      "guest_os_type": "windows8srv-64",
+      "headless": false,
+      "iso_url": "{{user `iso_file`}}",
+      "iso_checksum_type": "sha1",
+      "iso_checksum": "{{user `iso_sha1sum`}}",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10m",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "skip_compaction": false,
+      "vmx_data": {
+        "gui.fitguestusingnativedisplayresolution": "FALSE",
+        "memsize": "2048",
+        "numvcpus": "2",
+        "virtualHW.version": "10",
+        "scsi0.virtualDev": "lsisas1068"
+      }
+    },
+    {
+      "name": "Server2012R2_core_gugent",
+      "type": "vmware-iso",
+      "vm_name": "server2012r2",
+      "boot_wait": "5s",
+      "communicator": "winrm",
+      "disk_size": 61440,
+      "guest_os_type": "windows",
+      "floppy_files": [
+        "scripts/autounattend.xml",
+        "scripts/configure-winrm.ps1",
+        "scripts/install-vmware-tools.ps1"
+      ],
+      "guest_os_type": "windows8srv-64",
+      "headless": false,
+      "iso_url": "{{user `iso_file`}}",
+      "iso_checksum_type": "sha1",
+      "iso_checksum": "{{user `iso_sha1sum`}}",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10m",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "skip_compaction": false,
+      "vmx_data": {
+        "gui.fitguestusingnativedisplayresolution": "FALSE",
+        "memsize": "2048",
+        "numvcpus": "2",
+        "virtualHW.version": "10",
+        "scsi0.virtualDev": "lsisas1068"
+      }
+    },
+    {
+      "name": "vRA_IAAS_base",
+      "type": "vmware-iso",
+      "vm_name": "server2012r2",
+      "boot_wait": "5s",
+      "communicator": "winrm",
+      "disk_size": 61440,
+      "guest_os_type": "windows",
+      "floppy_files": [
+        "scripts/autounattend.xml",
+        "scripts/configure-winrm.ps1",
+        "scripts/install-vmware-tools.ps1"
+      ],
+      "guest_os_type": "windows8srv-64",
+      "headless": false,
+      "iso_url": "{{user `iso_file`}}",
+      "iso_checksum_type": "sha1",
+      "iso_checksum": "{{user `iso_sha1sum`}}",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10m",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "skip_compaction": false,
+      "vmx_data": {
+        "gui.fitguestusingnativedisplayresolution": "FALSE",
+        "memsize": "4096",
+        "numvcpus": "2",
+        "virtualHW.version": "10",
+        "scsi0.virtualDev": "lsisas1068"
+      }
+    },
+    {
+      "name" : "vRA_IAAS_lab",
+      "type": "vmware-iso",
+      "vm_name": "server2012r2",
+      "boot_wait": "5s",
+      "communicator": "winrm",
+      "disk_size": 61440,
+      "guest_os_type": "windows",
+      "floppy_files": [
+        "scripts/autounattend.xml",
+        "scripts/configure-winrm.ps1",
+        "scripts/install-vmware-tools.ps1"
+      ],
+      "guest_os_type": "windows8srv-64",
+      "headless": false,
+      "iso_url": "{{user `iso_file`}}",
+      "iso_checksum_type": "sha1",
+      "iso_checksum": "{{user `iso_sha1sum`}}",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10m",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "skip_compaction": false,
+      "vmx_data": {
+        "gui.fitguestusingnativedisplayresolution": "FALSE",
+        "memsize": "4096",
+        "numvcpus": "2",
+        "virtualHW.version": "10",
+        "scsi0.virtualDev": "lsisas1068"
+      }
+  }],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "only": [ "Server2012R2", "Server2012R2_gugent","Server2012R2_core_gugent", "vRA_IAAS_base", "vRA_IAAS_lab"],
+      "environment_vars": [
+        "VMWARE_TOOLS_URL={{user `vmware_tools_download`}}"
+      ],
+      "script": "scripts/install-vmware-tools.ps1"
+
+    },
+    {
+      "only": [ "Server2012R2", "Server2012R2_gugent","Server2012R2_core_gugent", "vRA_IAAS_base", "vRA_IAAS_lab"],
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "only": ["Server2012R2", "Server2012R2_gugent","Server2012R2_core_gugent", "vRA_IAAS_base", "vRA_IAAS_lab"],
+      "start_retry_timeout" : "5m",
+      "scripts": [
+        "scripts/create-service-account.ps1"
+      ]
+    },
+    {
+      "type": "file",
+      "only": ["vRA_IAAS_lab"],
+      "source": "scripts/SQLExpress2012r2.ini",
+      "destination": "c:\\Windows\\Temp\\SQLConfiguration.ini"
+    },
+    {
+      "type": "powershell",
+      "only" : ["vRA_IAAS_lab"],
+      "environment_vars": [
+        "SQL_URL={{user `sql_download`}}"
+      ],
+      "script": "scripts/install-SQLexpress2.ps1"
+
+    },
+    {
+      "type": "powershell",
+      "only": ["vRA_IAAS_base", "vRA_IAAS_lab"],
+      "scripts": [
+        "scripts/install-IIS.ps1"
+      ]
+    },
+    {
+      "type": "powershell",
+      "only": ["vRA_IAAS_base", "vRA_IAAS_lab"],
+      "script": "scripts/install-java7.ps1"
+    },
+    {
+      "type": "powershell",
+      "only": ["vRA_IAAS_base", "vRA_IAAS_lab"],
+      "scripts": [
+        "scripts/vra-config-MDTC.ps1"
+      ]
+    },
+    {
+      "type": "file",
+      "only": ["vRA_IAAS_lab"],
+      "source": "scripts/install-AD.ps1",
+      "destination": "c:\\Windows\\Temp\\install-AD.ps1"
+    },
+    {
+      "type": "powershell",
+      "only": ["vRA_IAAS_lab"],
+      "script": "scripts/install-AD.ps1"
+    },
+    {
+      "type": "powershell",
+      "only": ["vRA_IAAS_lab"],
+      "script": "scripts/configure-ADforvRA.ps1"
+    },
+    {
+      "type": "powershell",
+      "only": ["vRA_IAAS_base"],
+      "environment_vars": [
+        "VRA_AGENT_URL={{user `vra_iaas_agent_download`}}"
+      ],
+      "script": "scripts/install-vRA-IaaSManagementAgent.ps1"
+
+    },
+    {
+      "only": ["vRA_IAAS_base", "vRA_IAAS_lab"],
+      "type": "windows-restart"
+    }
+  ]
+}

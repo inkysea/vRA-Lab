@@ -1,0 +1,28 @@
+,
+{
+"type": "powershell",
+"environment_vars": [
+"vmware_tools_url={{user `vmware_tools_download`}}"
+],
+"scripts": [
+"scripts/install-vmware-tools.ps1"
+]
+}
+
+
+
+https://vra-app-1.inkysea.com:5480/installer/vCAC-IaaSManagementAgent-Setup.msi
+
+
+
+INSTALLLOCATION='C:\Program Files (x86)\VMware\vCAC\Management Agent\'
+MANAGEMENT_ENDPOINT_ADDRESS='https://vra-app-1.inkysea.com:5480/'
+MANAGEMENT_ENDPOINT_THUMBPRINT=C144BD5F039FF26A850DF9774BC3508E650729A0
+LicenseAccepted=1
+SERVICE_USER_NAME=INKYSEAVM\iaassvc
+SERVICE_USER_PASSWORD=VMware1!
+VA_USER_NAME=root
+VA_USER_PASSWORD=VMware123!
+EndpointThumbprintAccepted=1
+EndpointThumbprintAcceptedTwin=1
+CURRENT_MACHINE_FQDN=VRA-IAAS-2.inkysea.local

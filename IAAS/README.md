@@ -64,7 +64,7 @@ Software:
     -  IIS
     -  AD server.  domain = corp.local, cloudadmin@corp.local
     -  DNS
-    -  vRA IAAS Managment agent :  Still work in progress.  Requires vRA appliance running.
+    -  vRA IAAS Managment agent :  Disabled for now. Feel free to look at the code!  Requires vRA appliance running.
         
     Example:
     

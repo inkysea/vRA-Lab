@@ -13,7 +13,7 @@ Install-ADDSForest -CreateDnsDelegation:$False `
     -ForestMode "Win2012R2" `
     -InstallDns:$True `
     -LogPath "C:\Windows\NTDS" `
-    -NoRebootOnCompletion:$False `
+    -NoRebootOnCompletion:$true `
     -SysvolPath "C:\Windows\SYSVOL" `
     -Force:$True `
     -SafeModeAdministratorPassword ($AdminPassword | ConvertTo-SecureString -AsPlainText -Force) `

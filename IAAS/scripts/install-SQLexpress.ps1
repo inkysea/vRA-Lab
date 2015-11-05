@@ -27,10 +27,12 @@ write-host "Scheduleing install : $file" -ForegroundColor Yellow;
 
 
 $Sta = New-ScheduledTaskAction -Execute $file -argument "/Q /configurationfile=c:/Windows/Temp/SQLConfiguration.ini"
-$sched = Get-Date
+$ts = New-TimeSpan -Minutes 1
+$sched = (get-date) + $ts
 $hour = $sched.Hour
 $minute = $sched.minute+1
 $final_schedule = "$hour"+":"+"$minute"
+
 
 $Stt = New-ScheduledTaskTrigger -Once -At $final_schedule
 
@@ -51,7 +53,7 @@ $res = $sqlInstances -ne $null -and $sqlInstances -gt 0
   if ($res) {
         Write-host "SQL Server is installed"
   } else {
-        Write-host "SQL Server is not installed"
+        Write-host "SQL Server is not yet installed"
   }
 }
 

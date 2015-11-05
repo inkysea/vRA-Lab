@@ -200,7 +200,47 @@
         "virtualHW.version": "10",
         "scsi0.virtualDev": "lsisas1068"
       }
-  }],
+  },
+    {
+      "name": "vRA_IAAS_lab-vSphere",
+      "vm_name": "vRA-IAAS",
+      "vmdk_name": "Server2012-disk1",
+      "type": "vmware-iso",
+      "headless": false,
+      "disk_size": 61440,
+      "disk_type_id": "thin",
+      "guest_os_type": "windows8srv-64",
+      "iso_url": "{{user `iso_file`}}",
+      "iso_checksum": "{{user `iso_sha1sum`}}",
+      "iso_checksum_type": "sha1",
+      "remote_type" : "esx5",
+      "remote_datastore" : "SSD-12",
+      "output_directory" : "{{user `build_dir`}}",
+      "remote_host" : "10.25.27.12",
+      "remote_username" : "root",
+      "remote_password" : "VMware1!",
+      "ssh_username": "root",
+      "ssh_password": "{{user `root_password`}}",
+      "ssh_wait_timeout": "60m",
+      "boot_wait": "5s",
+      "shutdown_command": "shutdown -h now",
+      "http_directory": "scripts",
+      "version": 10,
+      "vmx_data_post": {
+        "displayname": "vRA IAAS",
+        "usb.present": "false"
+      },
+      "vmx_data": {
+        "ethernet0.networkName": "VM Network",
+        "ethernet0.present": "TRUE",
+        "ethernet0.virtualDev": "vmxnet3",
+        "cpuid.coresPerSocket": "1",
+        "memsize": "4096",
+        "numvcpus": "2"
+      }
+    }
+  ],
+
   "provisioners": [
     {
       "type": "powershell",
@@ -231,11 +271,11 @@
     },
     {
       "type": "powershell",
-      "only" : ["vRA_IAAS_lab"],
+      "only" : ["vRA_IAAS_base","vRA_IAAS_lab"],
       "environment_vars": [
         "SQL_URL={{user `sql_download`}}"
       ],
-      "script": "scripts/install-SQLexpress2.ps1"
+      "script": "scripts/install-SQLexpress.ps1"
 
     },
     {
@@ -259,7 +299,7 @@
     },
     {
       "type": "file",
-      "only": ["vRA_IAAS_lab"],
+      "only": ["vRA_IAAS_base"],
       "source": "scripts/install-AD.ps1",
       "destination": "c:\\Windows\\Temp\\install-AD.ps1"
     },
@@ -269,9 +309,18 @@
       "script": "scripts/install-AD.ps1"
     },
     {
+      "only": ["vRA_IAAS_lab"],
+      "type": "windows-restart"
+    },
+    {
       "type": "powershell",
       "only": ["vRA_IAAS_lab"],
+      "start_retry_timeout" : "5m",
       "script": "scripts/configure-ADforvRA.ps1"
+    },
+    {
+      "only": ["vRA_IAAS_base"],
+      "type": "windows-restart"
     },
     {
       "type": "powershell",
@@ -281,10 +330,6 @@
       ],
       "script": "scripts/install-vRA-IaaSManagementAgent.ps1"
 
-    },
-    {
-      "only": ["vRA_IAAS_base", "vRA_IAAS_lab"],
-      "type": "windows-restart"
     }
   ]
 }

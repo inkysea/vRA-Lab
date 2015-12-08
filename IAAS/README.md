@@ -91,7 +91,7 @@ Software:
             packer.json
      ```
      
-     Note:  The vRA_IAAS_lab-vSphere builder will setup a static IP address for the VM.  The configure the network 
+     Note:  The vRA_IAAS_lab-vSphere builder will setup a static IP address for the VM.  To configure the network 
             settings look under scripts/vSphere/  you will find a file named sample-network.txt.  Apply your network 
             settings to this file and rename the file to network.txt
  

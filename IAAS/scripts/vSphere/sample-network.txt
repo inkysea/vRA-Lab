@@ -1,0 +1,7 @@
+# rename to network.txt and provide values that are appropriate for your installation
+
+ipaddress=10.10.10.10
+defaultgtwy=10.10.10.1
+dnslist=10.10.10.1,10.10.10.1
+prefixlength=24
+interface=Ethernet0

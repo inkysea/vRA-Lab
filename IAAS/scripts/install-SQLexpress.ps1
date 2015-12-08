@@ -57,6 +57,23 @@ $res = $sqlInstances -ne $null -and $sqlInstances -gt 0
   }
 }
 
+# Configure TCP port to 1433
 
+$SQLName = $env:computername
+$Instance = 'SQLEXPRESS'
+
+[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SqlWmiManagement") | out-null
+[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.Management") | out-null
+
+
+$m = New-Object ('Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer') $SQLName
+
+$urn = "ManagedComputer[@Name='$SQLName']/ServerInstance[@Name='$Instance']/ServerProtocol[@Name='Tcp']"
+$Tcp = $m.GetSmoObject($urn)
+
+$m.GetSmoObject($urn + "/IPAddress[@Name='IPAll']").IPAddressProperties['TcpPort'].Value = "1433"
+$m.GetSmoObject($urn + "/IPAddress[@Name='IPAll']").IPAddressProperties['TcpDynamicPorts'].Value = ""
+
+$TCP.alter()
 
 exit 0

@@ -8,8 +8,6 @@ winrm set winrm/config/service '@{AllowUnencrypted="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
 winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/listener?Address=*+Transport=HTTP '@{Port="5985"} '
-winrm set winrm/config/service/auth '@{CredSSP="true"}'
-winrm set "winrm/config/service/auth" '@{CredSSP="true"}'
 
 Enable-WSManCredSSP -role client -delegatecomputer * -force
 Enable-WSManCredSSP -role server -force

@@ -1,0 +1,5 @@
+ipaddress=10.25.27.80
+defaultgtwy=10.25.27.1
+dnslist=10.25.27.1,10.25.27.1
+prefixlength=24
+interface=Ethernet0
